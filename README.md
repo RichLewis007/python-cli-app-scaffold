@@ -2,7 +2,7 @@
 
 A modern, production-ready scaffold for building Python CLI utilities using the latest tools and best practices.
 
-**Author:** [Rich Lewis](https://github.com/RichLewis007) - GitHub [@RichLewis007](https://github.com/RichLewis007)
+**Author:** [Rich Lewis](https://RichLewis.com) - GitHub [@RichLewis007](https://github.com/RichLewis007)
 
 ## Features
 
@@ -269,7 +269,7 @@ MIT License - see LICENSE file for details
 
 ## Author
 
-**Rich Lewis** - [GitHub @RichLewis007](https://github.com/RichLewis007)
+**[Rich Lewis](https://RichLewis.com)** - [GitHub @RichLewis007](https://github.com/RichLewis007)
 
 ## Resources
 
