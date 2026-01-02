@@ -124,7 +124,10 @@ menu_basic() {
 
   while true; do
     printf "\n%s\n" "$border"
-    printf "%b%s%b\n" "$COLOR_BOLD" "$prompt" "$COLOR_RESET"
+    # Print prompt with newlines (prompt may contain actual newlines)
+    printf "%b" "$COLOR_BOLD"
+    printf "%b" "$prompt"
+    printf "%b\n" "$COLOR_RESET"
     printf "%s\n" "$border"
     for i in "${!options[@]}"; do
       printf "  %b%2d)%b %s\n" "$COLOR_CYAN" "$((i+1))" "$COLOR_RESET" "${options[$i]}"
@@ -215,6 +218,7 @@ _MAKE_TARGETS=(
   "format"
   "check"
   "clean"
+  "quit"
 )
 
 # Array of menu descriptions (matching order of targets)
@@ -231,6 +235,7 @@ _MAKE_DESCRIPTIONS=(
   "Format code with ruff"
   "Run all checks (lint, type-check, test)"
   "Clean up generated files"
+  "Exit the menu"
 )
 
 # ------------------------------------------------------------
@@ -238,6 +243,13 @@ _MAKE_DESCRIPTIONS=(
 # ------------------------------------------------------------
 execute_target() {
   local target="$1"
+  
+  # Handle quit specially
+  if [[ "$target" == "quit" ]]; then
+    log_info "Exiting menu."
+    exit 0
+  fi
+  
   cd "$SCRIPT_DIR"
   
   case "$target" in
@@ -375,7 +387,8 @@ main() {
   
   while true; do
     local selected_option
-    local prompt="Project Menu\nSelect a command to execute:"
+    local prompt="Project Menu
+Select a command to execute:"
     
     # Use pick_option which will try fzf, then gum, then fallback to numbered menu
     selected_option=$(pick_option "$prompt" "${menu_options[@]}") || {
