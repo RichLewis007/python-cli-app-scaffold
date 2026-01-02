@@ -31,9 +31,10 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 ### 2. Copy the Scaffold to a new Project dir
 
-Run the script:
+Make the script executable and run it:
 
 ```bash
+chmod +x copy-scaffold-for-use.sh
 ./copy-scaffold-for-use.sh
 ```
 
@@ -251,9 +252,10 @@ See [Typer documentation](https://typer.tiangolo.com/) for more examples.
 
 ## Using as a Template
 
-To use this scaffold for a new project, simply run:
+To use this scaffold for a new project, make the script executable and run it:
 
 ```bash
+chmod +x copy-scaffold-for-use.sh
 ./copy-scaffold-for-use.sh
 ```
 
