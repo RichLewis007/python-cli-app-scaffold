@@ -160,8 +160,10 @@ Both editable and normal installs use the same directory structure:
 
 ```bash
 mycli --help
+mycli --version
 mycli hello "World" --fancy
-mycli version
+mycli info
+mycli example --count 3
 ```
 
 ## Project Structure
@@ -183,12 +185,33 @@ mycli version
 
 ## Development
 
+### Development Workflow
+
+**Yes, editable installs are the standard practice for Python CLI development!** Here's the typical workflow:
+
+1. **During active development** (recommended):
+
+   - Install in editable mode: `./install.sh --editable`
+   - Make changes to your code
+   - Test immediately - changes are reflected without reinstalling
+   - Run from anywhere: `mycli --help`
+
+2. **Before system-wide installation** (testing in project):
+
+   - Run directly using `uv run`: `uv run mycli --help`
+   - Or run as a Python module: `uv run python -m python_cli_app_scaffold.main`
+   - Or if you've run `uv sync`, the package is installed in the venv, so `uv run mycli` works
+
+3. **For production/release**:
+   - Install normally: `./install.sh --normal`
+   - Creates a static installation
+
 ### Using uv
 
 This project uses `uv` for dependency management. Key commands:
 
 ```bash
-# Sync dependencies
+# Sync dependencies (creates venv and installs package in development mode)
 uv sync
 
 # Add a dependency
@@ -200,9 +223,15 @@ uv add --dev <package-name>
 # Run Python in the project environment
 uv run python
 
+# Run the CLI tool during development (before system-wide installation)
+uv run mycli --help
+uv run mycli hello "World"
+
+# Or run as a Python module
+uv run python -m python_cli_app_scaffold.main --help
+
 # Run commands in the project environment
 uv run pytest
-uv run mycli --help
 ```
 
 ### Running Tests
@@ -218,9 +247,57 @@ uv run pytest --cov        # With coverage
 # Linting with ruff
 uv run ruff check .
 
+# Fix linting issues
+uv run ruff check --fix .
+
 # Type checking with mypy
 uv run mypy src/
+
+# Format code
+uv run ruff format .
 ```
+
+### Using Makefile (Optional)
+
+The project includes an optional Makefile with convenient shortcuts for common tasks. You can use it if you prefer shorter commands, or run the `uv` commands directly.
+
+**Using Makefile:**
+
+```bash
+make help              # Show all available commands
+make sync              # Sync dependencies
+make test              # Run tests
+make test-cov          # Run tests with coverage
+make lint              # Run linting
+make lint-fix          # Fix linting issues
+make type-check        # Run type checking
+make format            # Format code
+make check             # Run all checks (lint, type-check, test)
+make clean             # Clean up generated files
+make install           # Install CLI tool (normal mode)
+make install-editable  # Install CLI tool (editable mode)
+```
+
+**Or run commands directly:**
+
+```bash
+uv sync                # Instead of make sync
+uv run pytest          # Instead of make test
+uv run ruff check .    # Instead of make lint
+```
+
+> **Note:** The Makefile is optional. If you don't have `make` installed or prefer not to use it, you can run all commands directly using `uv` as shown in the sections above.
+
+### Pre-commit Hooks
+
+To set up pre-commit hooks for automatic code quality checks:
+
+```bash
+uv tool install pre-commit
+pre-commit install
+```
+
+This will run linting, formatting, and type checking before each commit.
 
 ## Customization Guide
 

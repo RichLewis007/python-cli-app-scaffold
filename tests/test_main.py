@@ -23,10 +23,24 @@ def test_hello_command_fancy() -> None:
 
 
 def test_version_command() -> None:
-    """Test the version command."""
-    result = runner.invoke(app, ["version"])
+    """Test the version command via --version flag."""
+    result = runner.invoke(app, ["--version"])
     assert result.exit_code == 0
     assert "version" in result.stdout.lower()
+
+
+def test_info_command() -> None:
+    """Test the info command."""
+    result = runner.invoke(app, ["info"])
+    assert result.exit_code == 0
+    assert "mycli" in result.stdout
+
+
+def test_example_command() -> None:
+    """Test the example command."""
+    result = runner.invoke(app, ["example", "--count", "2"])
+    assert result.exit_code == 0
+    assert "example" in result.stdout.lower()
 
 
 def test_help_command() -> None:

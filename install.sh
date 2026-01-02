@@ -28,7 +28,7 @@ print_success() {
 }
 
 print_info() {
-    echo -e "${YELLOW}ℹ $1${NC}"
+    echo -e "${YELLOW}ℹ $1${NC}" >&2
 }
 
 # Function to check if uv is installed
@@ -103,13 +103,15 @@ get_installation_mode() {
                 print_info "Using saved default mode: $default"
                 mode="$default"
             else
-                # Prompt user
-                echo ""
-                echo "Installation mode:"
-                echo "  1) Editable (recommended for development) - changes reflect immediately"
-                echo "  2) Normal (production) - static installation"
-                echo ""
-                read -p "Choose mode [1/2] (default: 1): " choice
+                # Prompt user - output to stderr so it's not captured by command substitution
+                echo "" >&2
+                echo "Installation mode:" >&2
+                echo "  1) Editable (recommended for development) - changes reflect immediately" >&2
+                echo "  2) Normal (production) - static installation" >&2
+                echo "" >&2
+                # Use printf instead of echo -n for better portability and explicit flushing
+                printf "Choose mode [1=Editable, 2=Normal] (default: 1): " >&2
+                read -r choice < /dev/tty
                 case "${choice:-1}" in
                     1)
                         mode="editable"
@@ -168,9 +170,22 @@ update_shell() {
     fi
 }
 
+# Function to get command name from pyproject.toml
+get_command_name() {
+    local pyproject_file="$SCRIPT_DIR/pyproject.toml"
+    if [ -f "$pyproject_file" ]; then
+        # Extract the command name from [project.scripts] section
+        # Format: command_name = "package.module:app"
+        grep -A 1 "^\[project.scripts\]" "$pyproject_file" | grep -v "^\[project.scripts\]" | head -1 | sed -E 's/^[[:space:]]*([^[:space:]]+)[[:space:]]*=.*/\1/'
+    else
+        echo "mycli"  # Fallback default
+    fi
+}
+
 # Function to show installation summary
 show_summary() {
     local mode=$1
+    local cmd_name=$(get_command_name)
     
     echo ""
     print_success "Installation complete!"
@@ -181,7 +196,7 @@ show_summary() {
     echo "  Executable directory: $(uv tool dir --bin)"
     echo ""
     echo "The CLI tool should now be available in your PATH."
-    echo "Try running: mycli --help"
+    echo "Try running: $cmd_name --help"
     echo ""
     
     if [ "$mode" = "editable" ]; then
