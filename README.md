@@ -17,17 +17,27 @@ A modern, production-ready scaffold for building Python CLI utilities using the 
 
 ## Requirements
 
-- **Python 3.14.2** (managed by uv)
+- **Python 3.14.2** (managed by uv) - [uv usage guide](HELP-USING-UV.md)
 - **uv** package manager ([Installation guide](https://docs.astral.sh/uv/getting-started/installation/))
 - **Bash 5** (macOS: `brew install bash`)
 
 ## Quick Start
 
-### 1. Install uv (if not already installed)
+### 1. Install uv and Python 3.14.2
+
+**Install uv** (if not already installed):
 
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
+
+**Install Python 3.14.2** using uv:
+
+```bash
+uv python install 3.14.2
+```
+
+> **New to uv?** See the [uv usage guide](HELP-USING-UV.md) for detailed instructions on using uv for Python development.
 
 ### 2. Copy the Scaffold to a new Project dir
 

@@ -156,4 +156,6 @@ echo ""
 echo "Next steps:"
 echo "  1. cd $TARGET_DIR"
 echo "  2. Customize the project as needed"
-echo "  3. Run ./install.sh to install the CLI tool"
+echo "  3. Run ./install.sh --editable to install the CLI tool in an editable state for your use."
+echo 
+echo "  Note: You can continue developing your CLI tool in the editable state, and it will be automatically updated when you make changes to the source code."
