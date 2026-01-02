@@ -48,12 +48,14 @@ fi
 PACKAGE_NAME_HYPHEN=$(echo "$DIR_NAME" | tr '[:upper:]' '[:lower:]')
 # For Python imports and directory names: use underscores (lowercase)
 PACKAGE_NAME=$(echo "$DIR_NAME" | tr '[:upper:]' '[:lower:]' | tr '-' '_')
+# For command name: use directory name with dashes preserved (lowercase)
+CMD_NAME_DEFAULT=$(echo "$DIR_NAME" | tr '[:upper:]' '[:lower:]')
 
-# Derive command name (use package name, or could prompt separately)
-echo "Enter the command name (press Enter to use '$PACKAGE_NAME'):"
+# Derive command name (default to directory name with dashes)
+echo "Enter the command name (press Enter to use '$CMD_NAME_DEFAULT'):"
 read -r CMD_NAME
 if [ -z "$CMD_NAME" ]; then
-    CMD_NAME="$PACKAGE_NAME"
+    CMD_NAME="$CMD_NAME_DEFAULT"
 fi
 
 # Prompt for app description
