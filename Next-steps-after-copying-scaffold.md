@@ -84,6 +84,23 @@ Test that your CLI tool is working:
 <your-command-name> --version
 ```
 
+### 5. Uninstall (If Needed)
+
+To remove the system-wide installation:
+
+```bash
+uv tool uninstall <your-package-name>
+```
+
+Replace `<your-package-name>` with your package name from `pyproject.toml` (the `name` field, typically with hyphens like `my-tool`).
+
+**What this does:**
+- Removes the tool from uv's tool environment
+- Removes the command from your PATH
+- Stops exposing the command system-wide
+
+> **Note:** This only uninstalls the system-wide installation. Your local project environment (`.venv` created by `uv sync`) remains untouched. If you want to clean that up, you can delete the `.venv` directory manually.
+
 ## Development Workflow
 
 ### Making Changes
