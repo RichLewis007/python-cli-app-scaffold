@@ -390,6 +390,23 @@ This installs tools in an isolated environment managed by `uv`.
 
 Use project tools for development dependencies, global tools for system-wide utilities.
 
+### Uninstalling Tools
+
+To remove a globally installed tool:
+
+```bash
+uv tool uninstall <tool-name>
+```
+
+Replace `<tool-name>` with the name of the tool you want to remove (use the package name from `pyproject.toml`, typically with hyphens like `my-tool`).
+
+**What this does:**
+- Removes the tool from uv's tool environment
+- Removes the command from your PATH
+- Stops exposing the command system-wide
+
+> **Note:** This is the supported way to remove tools installed via `uv tool install`. It properly cleans up the tool environment and removes the command from your system PATH.
+
 ## Troubleshooting
 
 ### uv can't find Python 3.14.2
