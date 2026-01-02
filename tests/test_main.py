@@ -1,6 +1,5 @@
 """Tests for the main CLI application."""
 
-import pytest
 from typer.testing import CliRunner
 
 from python_cli_app_scaffold.main import app

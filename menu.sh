@@ -413,12 +413,8 @@ main() {
     fi
     
     printf "\n"
-    if confirm "Run another command? [y/N]"; then
-      continue
-    else
-      log_info "Exiting menu."
-      exit 0
-    fi
+    printf "Press ENTER to continue..."
+    read -r
   done
 }
 
